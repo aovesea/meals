@@ -1,0 +1,5 @@
+--require underscore
+--require should
+--require supertest
+-R spec
+--ui bdd
