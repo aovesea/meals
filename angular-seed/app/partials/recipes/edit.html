@@ -1,0 +1,25 @@
+<div ng-controller="RecipeCtrl">
+    <form name="myForm">
+        <label>Name:</label><br/>
+        <input type="text" name="name" ng-model="recipe.name" required/> <br/><br/>
+        <span ng-show="myForm.name.$error.required" class="help-inline">Required</span>
+        <label>Ingredients:</label>
+        <div ng-model="recipe.ingredients" ng-repeat="ingredient in recipe.ingredients">
+            <!-- works outside of this loop, take a look at: http://jimhoskins.com/2012/12/14/nested-scopes-in-angularjs.html-->
+            <input type="text" ng-model="ingredient.measurement"/>
+            <input type="text" ng-model="ingredient.item" typeahead="i as i.name for i in stuff | filter:$viewValue | limitTo:5" required>
+            <span ng-show="canRemoveIngredient()">[ <a href="" ng-click="removeIngredient(ingredient)">X</a> ]</span>
+            <br/>
+        </div>
+        <div>
+            <a href="" ng-click="addIngredient()">add</a>
+        </div>
+        <br/>
+        <label>Description</label>
+        <textarea ng-model="recipe.description">{{recipe.description}}</textarea><br/>
+        <button ng-click="save()" ng-disabled="myForm.$invalid">Save</button>
+
+        <div class='container-fluid'>
+        </div>
+    </form>
+</div>

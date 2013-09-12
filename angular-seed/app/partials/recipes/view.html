@@ -1,0 +1,17 @@
+<div ng-controller="ShowRecipeCtrl">
+    <div class="actions pull-right">
+        <a href="#/recipes/{{recipe._id}}/edit">edit</a>&nbsp;
+        <a href="" ng-click="delete()">delete</a>
+    </div>
+    <h2>{{recipe.name}}</h2>
+    <p>{{recipe.description}}</p>
+    <div ng-model="recipe">
+        <h3>Ingredients</h3>
+        <ul>
+            <li ng-repeat="ingredient in recipe.ingredients">
+                {{ingredient.measurement}} &nbsp;&nbsp;&nbsp;
+                {{ingredient.item.name}}
+            </li>
+        </ul>
+    </div>
+</div>
