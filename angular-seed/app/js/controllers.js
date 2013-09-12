@@ -15,14 +15,10 @@ angular.module('myApp.controllers', ['myApp.services'])
             $scope.recipe.ingredients.push(newIngredient());
         };
 
-        $scope.removeIngredient = function(ingredient) {
+        $scope.removeIngredient = function(indexOfIngredient) {
             var ingredients = $scope.recipe.ingredients;
             if (ingredients.length > 1) {
-                for (var i = 0, length = ingredients.length; i < length; i++) {
-                    if (ingredient === ingredients[i]) {
-                        ingredients.splice(i, 1);
-                    }
-                }
+                ingredients.splice(indexOfIngredient, 1);
             }
         };
 
