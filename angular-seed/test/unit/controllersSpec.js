@@ -17,27 +17,39 @@ describe('controllers', function(){
                 name: 'New Recipe Name'
             };
             ingredient = {
-                _id: '1234',
-                name: 'Ingredient'
+                measurement: "1/2 cup",
+                item: {
+                    _id: '1234',
+                    name: 'Ingredient'
+                }
             };
+
             $httpBackend.when('POST', 'http://localhost:3000/recipes').respond(recipe);
-            $httpBackend.when('POST', 'http://localhost:3000/ingredients').respond(ingredient);
             $httpBackend.when('PUT', 'http://localhost:3000/recipes/' + recipe._id + '/ingredients').respond([ingredient]);
+
             scope = $rootScope.$new();
             ctrl = $controller('CreateRecipeCtrl', {$scope: scope});
 
-            scope.recipe = {name: "New Recipe Name"};
-            scope.recipe.ingredients = [{name: 'Ingredient'}];
-            scope.save();
+            scope.recipe = {name: recipe.name};
+            scope.recipe.ingredients = [ingredient];
         }));
 
-        it('should save recipe', inject(function() {
-            $httpBackend.expectPOST('http://localhost:3000/recipes', scope.recipe);
+        it('should save recipe', inject(function(recipeService) {
+            var recipeToCreate = {
+                name: recipe.name,
+                ingredients: [ingredient]
+            };
+
+            $httpBackend.expectPOST('http://localhost:3000/recipes', recipeToCreate);
+
+            scope.save();
 
             $httpBackend.flush();
         }));
 
         it('should redirect to newly created recipe', inject(function() {
+            scope.save();
+
             $httpBackend.flush();
 
             expect(location.path()).toBe("/recipes/" + recipe._id + "/edit");
@@ -62,8 +74,11 @@ describe('controllers', function(){
                 _id: '1234',
                 name: 'New Recipe Name',
                 ingredients: [{
-                    _id: '1234',
-                    name: 'Ingredient'
+                    measurement: "1/2 cup",
+                    item: {
+                        _id: '1234',
+                        name: 'Ingredient'
+                    }
                 }]
             };
 
@@ -90,7 +105,7 @@ describe('controllers', function(){
 
             scope.save();
 
-            $httpBackend.flush();
+//            $httpBackend.flush();
         }));
     });
 
