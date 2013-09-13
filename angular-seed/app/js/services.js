@@ -22,10 +22,11 @@ angular.module('myApp.services', ['ngResource'])
                 return $http.put('http://localhost:3000/recipes/' + recipe._id + '/ingredients', ingredients);
             },
             prepareIngredients: function(ingredients) {
-                angular.forEach(ingredients, function(ingredient) {
+                var preparedIngredients = angular.copy(ingredients);
+                angular.forEach(preparedIngredients, function(ingredient) {
                     ingredient.item = ingredient.item._id;
                 });
-                return ingredients;
+                return preparedIngredients;
             },
             createRecipe: function(recipe) {
                 return $http.post('http://localhost:3000/recipes', recipe);
